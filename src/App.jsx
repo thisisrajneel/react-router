@@ -1,6 +1,7 @@
+import React from 'react';
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom"
 import Landing from "./components/Landing"
-import Dashboard from "./components/Dashboard"
+const Dashboard = React.lazy(() => import('./components/Dashboard'))
 
 function App() {
   // basic routing with hard reloads - not proper SPA
