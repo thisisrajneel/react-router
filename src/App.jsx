@@ -1,17 +1,16 @@
-import React from 'react';
+import {lazy, Suspense} from 'react';
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom"
 import Landing from "./components/Landing"
-const Dashboard = React.lazy(() => import('./components/Dashboard'))
+const Dashboard = lazy(() => import('./components/Dashboard'))
 
 function App() {
-  // basic routing with hard reloads - not proper SPA
   return (
     <>
       <BrowserRouter>
         <AppBar />
         <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Suspense fallback={'loading...'}> <Landing /> </Suspense>} />
+          <Route path="/dashboard" element={<Suspense fallback={'loading...'}> <Dashboard /> </Suspense>} />
         </Routes>
       </BrowserRouter>
     </>
