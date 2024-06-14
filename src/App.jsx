@@ -3,29 +3,25 @@
 // make the components load lazily and add a fallback
 
 import { BrowserRouter, Route, Router, Routes, useNavigate } from "react-router-dom"
-import Landing from './components/Landing'
-import Dashboard from './components/Dashboard'
+import { Suspense, lazy } from "react"
+const  Landing = lazy(() => import('./components/Landing'))
+const  Dashboard = lazy(() => import('./components/Dashboard'))
+import Loading from "./components/Loading" // Loading cannot be lazily loaded
 
 function App() {
   return (
     <BrowserRouter>
       <AppBar />
       <Routes>
-        <Route path="/" element={<Landing />}>
-          
-        </Route>
-        <Route path="/dashboard" element={<Dashboard />}>
-          
-        </Route>
+        <Route path="/" element={<Suspense fallback={<Loading />}><Landing /></Suspense>} />
+        <Route path="/dashboard" element={<Suspense fallback={<Loading />}><Dashboard /></Suspense>} />
       </Routes>
-      
     </BrowserRouter>
   )
 }
 
 function AppBar() {
   const navigate = useNavigate()
-  
 
   return (
     <>
